@@ -23,7 +23,7 @@ export class AdminAuthService {
 
   async login(loginDto: LoginDto){
     const admin = await this.adminUserService.findByEmail(loginDto.email)
-    if (!admin) throw new UnauthorizedException('Email or password is incorrect')
+    if (!admin) throw new UnauthorizedException('Email does not exist')
     
       
     const passwordIsvalid = await this.comparePassword(

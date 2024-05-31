@@ -1,26 +1,40 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { User, UserDocument } from './schema/user.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
+import * as bcrypt from 'bcrypt'
+import { UpdateUserDto } from 'src/shared/create-user.dto';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+  ) {}
+
+  async findById(userId: string): Promise<User>{
+    return await this.userModel.findById(userId).lean()
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findByEmail(email: string): Promise<User>{
+    return await this.userModel.findOne({ email }).lean()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async comparePassword(passwordDto: string, userPassword: string): Promise<boolean> {
+    return await bcrypt.compare(passwordDto, userPassword);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  async update(userId: Types.ObjectId, updateUserDto: UpdateUserDto): Promise<User> {
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      userId,
+      updateUserDto,
+      { new: true } 
+    );
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    if (!updatedUser) {
+      throw new BadRequestException();
+    }
+    delete updatedUser.password
+    return updatedUser;
   }
 }

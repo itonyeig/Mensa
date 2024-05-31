@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 
 
 export const handleCreateUserError = (error: any) => {
-  console.log(error)
+  // console.log(error)
   // Handle duplicate key errors
   if (error?.code === 11000) {
     throw new ConflictException('This email already exists');

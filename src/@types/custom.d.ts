@@ -1,4 +1,4 @@
-import { User as UserI } from '../user/schemas/user.schema';
+import { User as UserI } from '../user/schema/user.schema';
 
 declare global {
     namespace Express {
@@ -7,7 +7,7 @@ declare global {
       
       interface Request {
         user?: User;
-        admin?: import('../admin/profile/schema/admin-profile.schema').AdminProfile
+        admin?: import('../admin/user/schema/admin-user.schema').AdminUser
       }
     }
   }

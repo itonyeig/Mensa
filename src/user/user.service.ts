@@ -25,15 +25,16 @@ export class UserService {
   }
 
   async update(userId: Types.ObjectId, updateUserDto: UpdateUserDto): Promise<User> {
-    const updatedUser = await this.userModel.findByIdAndUpdate(
+    const result = await this.userModel.findByIdAndUpdate(
       userId,
       updateUserDto,
       { new: true } 
     );
 
-    if (!updatedUser) {
+    if (!result) {
       throw new BadRequestException();
     }
+    const updatedUser = result.toObject()
     delete updatedUser.password
     return updatedUser;
   }

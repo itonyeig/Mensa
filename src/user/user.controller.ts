@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { Request } from 'express';
 import { UpdateUserDto } from 'src/shared/create-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ResponseFormatter } from 'src/shared/response-formater';
 
 @ApiBearerAuth()
 @ApiTags('User')
@@ -10,29 +11,16 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // @Post()
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.userService.create(createUserDto);
-  // }
-
-  // @Get()
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.userService.findOne(+id);
-  // }
-
-  @Patch()
-  update(@Req() req: Request, @Body() body: UpdateUserDto) {
-    const userId = req.user._id
-    return this.userService.update(userId, body)
+  @Get('me')
+  findUser(@Req() req: Request){
+    return ResponseFormatter({ data: req.user })
   }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.userService.remove(+id);
-  // }
+  @Patch()
+  async update(@Req() req: Request, @Body() body: UpdateUserDto) {
+    const userId = req.user._id
+    const data = await this.userService.update(userId, body)
+    return ResponseFormatter({ data })
+  }
+
 }

@@ -27,6 +27,6 @@ async function bootstrap() {
   app.use(morgan('dev')); //Log routes
   app.enableCors({ origin: '*' });
   app.useGlobalFilters(new AllExceptionsFilter()); //Simple global error handler
-  await app.listen(process.env.PORT);
+  await app.listen(process.env.PORT, '0.0.0.0');
 }
 bootstrap();

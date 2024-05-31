@@ -12,7 +12,7 @@ async function bootstrap() {
   // Swagger setup 
   const config = new DocumentBuilder()
   .setTitle("Mensa's API")
-  .setDescription('User managements and posts')
+  .setDescription('User managements and posts. Geting all blogs can be accessed without authentication so anyone can view the blogs. All other routes are protected. Kindly login as the appropriate user type to access that route.')
   .setVersion('1.0')
   .addBearerAuth()
   .build();

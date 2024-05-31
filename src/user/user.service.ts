@@ -24,7 +24,7 @@ export class UserService {
     return await bcrypt.compare(passwordDto, userPassword);
   }
 
-  async update(userId: Types.ObjectId, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(userId: Types.ObjectId | string, updateUserDto: UpdateUserDto): Promise<User> {
     const result = await this.userModel.findByIdAndUpdate(
       userId,
       updateUserDto,

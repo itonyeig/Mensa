@@ -1,8 +1,7 @@
 import { ForbiddenException, Injectable, NestMiddleware, UnauthorizedException } from "@nestjs/common";
 import { NextFunction, Request, Response } from "express";
 import { AdminAuthService } from "src/admin/auth/admin-auth.service";
-import { AdminUserService } from "src/admin/user/admin-user.service";
-import { AdminUser } from "src/admin/user/schema/admin-user.schema";
+import { AdminUserService } from "src/admin/admin-user/admin-user.service";
 import { UserLevelType } from "src/shared/shared.interface";
 // import { AdminProfile } from "src/admin/profile/schema/admin-profile.schema";
 

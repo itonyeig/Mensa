@@ -3,7 +3,7 @@ import { AdminAuthService } from './admin-auth.service';
 import { AdminAuthController } from './admin-auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AdminUserModule } from '../user/admin-user.module';
+import { AdminUserModule } from '../admin-user/admin-user.module';
 
 @Module({
   imports: [

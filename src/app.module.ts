@@ -4,10 +4,11 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { AdminAuthModule } from './admin/auth/admin-auth.module';
-import { AdminUserModule } from './admin/user/admin-user.module';
+import { AdminUserModule } from './admin/admin-user/admin-user.module';
 import { AdminAuthenticationMiddleware } from './middleware/admin-auth.middleware';
 import { AuthenticationMiddleware } from './middleware/auth.middleware';
 import { BlogModule } from './blog/blog.module';
+import { UserManagementModule } from './admin/user-management/user-management.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BlogModule } from './blog/blog.module';
     BlogModule,
     AdminAuthModule,
     AdminUserModule,
+    UserManagementModule,
   ],
   controllers: [],
   providers: [],
@@ -32,6 +34,8 @@ export class AppModule implements NestModule {
         // Exclude non-auth paths
         { path: 'favicon.ico', method: RequestMethod.GET },
         { path: 'images/icons/gear.png', method: RequestMethod.GET },
+        // Exclude get blogs routes so all users can read blogs
+        { path: 'blog', method: RequestMethod.GET },
         // Exclude auth paths
         { path: 'auth/(.*)', method: RequestMethod.ALL },
         // Exclude all admin paths from this middleware

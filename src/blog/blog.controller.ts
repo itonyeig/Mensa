@@ -13,7 +13,7 @@ export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
   @Post('')
-  async createAdmin(
+  async createBlog(
     @Body() createBlogDto: CreateBlogDto,
     @Req() req: Request
   ){

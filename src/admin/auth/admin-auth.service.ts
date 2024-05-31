@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_Decoded, JWT_Encoding, UserLevelType } from 'src/shared/shared.interface';
 import * as bcrypt from 'bcrypt';
-import { AdminUserService } from '../user/admin-user.service';
+import { AdminUserService } from '../admin-user/admin-user.service';
 import { LoginDto } from 'src/shared/login.dto';
 
 

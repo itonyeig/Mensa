@@ -11,10 +11,9 @@ import { User, UserDocument } from 'src/user/schema/user.schema';
 export class AdminUserService {
   constructor(
     @InjectModel(AdminUser.name) private adminUserModel: Model<AdminUserDocument>,
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto, userType: 'admin' | 'user'){
+  async createUser(createUserDto: CreateUserDto){
     try {
       const hashedPassword = await hashPassord(createUserDto.password)
       const userWithHashedPassword = {
@@ -22,11 +21,7 @@ export class AdminUserService {
           password: hashedPassword,
         };
       
-      if (userType === 'admin') {
         return await this.adminUserModel.create(userWithHashedPassword)
-      } else if(userType === 'user'){
-        return await this.userModel.create(userWithHashedPassword)
-      }
     } catch (error) {
       handleCreateUserError(error)
     }
